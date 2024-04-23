@@ -20,51 +20,46 @@ class CoreDataViewModel : ObservableObject {
         let request = NSFetchRequest<TaskEntity>(entityName: "TaskEntity")
         
         do {
-           tasks = try viewContext.fetch(request)
+            tasks = try viewContext.fetch(request)
         } catch {
-            print("DEBUG: Some error occured while fetching...")
+            print("DEBUG: Some error occured while fetching: \(error.localizedDescription)")
         }
     }
     
-    func addTask(title: String = "", taskDescription: String = "", completed: Bool = false) {
-            let newTask = TaskEntity(context: viewContext)
-            newTask.id = UUID()
-            newTask.title = title
-            newTask.taskDescription = taskDescription
-            
-            save()
+    func addTask(title: String, taskDescription: String, completed: Bool = false) {
+        let newTask = TaskEntity(context: viewContext)
+//        newTask.id = UUID()
+        newTask.title = title
+        newTask.taskDescription = taskDescription
+        save()
+        fetchTasks()
         print("Add")
     }
     
-     func save() {
+    func save() {
         do {
             try viewContext.save()
         } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            print("Failed to save tasks: \(error.localizedDescription)")
         }
-    }
-    
-
-    
-     func deleteTask(offsets: IndexSet) {
-//            offsets.map { tasks[$0] }.forEach(viewContext.delete)
-
-         guard let index = offsets.first else {
-             return
-         }
-         let taskEntity = tasks[index]
-         viewContext.delete(taskEntity)
-        save()
     }
     
     func updateTask(task: TaskEntity, newTitle: String, newDescription: String) {
         task.title = newTitle
         task.taskDescription = newDescription
-        
         save()
+        fetchTasks()
+    }
+    
+    func deleteTask(offsets: IndexSet) {
+//        offsets.map { tasks[$0] }.forEach(viewContext.delete)
+        guard let index = offsets.first else {
+            return
+        }
+        let taskEntity = tasks[index]
+        viewContext.delete(taskEntity)
+        save()
+        fetchTasks()
     }
     
 }
