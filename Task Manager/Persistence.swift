@@ -13,9 +13,10 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+        for x in 0..<10 {
+            let newTask = TaskEntity(context: viewContext)
+//            newItem.timestamp = Date()
+            newTask.title = "Task \(x)"
         }
         do {
             try viewContext.save()
@@ -49,6 +50,8 @@ struct PersistenceController {
                  Check the error message to determine what the actual problem was.
                  */
                 fatalError("Unresolved error \(error), \(error.userInfo)")
+            } else {
+                print("Successfully loaded core data!")
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
