@@ -15,6 +15,8 @@
 		313B39BC2BD824BF002736FC /* Task_Manager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 313B39BA2BD824BF002736FC /* Task_Manager.xcdatamodeld */; };
 		313B39C42BD85B74002736FC /* CoreDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313B39C32BD85B74002736FC /* CoreDataViewModel.swift */; };
 		313B39C62BD86F6B002736FC /* AddTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313B39C52BD86F6B002736FC /* AddTaskView.swift */; };
+		31EFA1332BD8FBFD00CF124B /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EFA1322BD8FBFD00CF124B /* TaskView.swift */; };
+		31EFA1352BD90BC600CF124B /* TaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EFA1342BD90BC600CF124B /* TaskDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,9 @@
 		313B39BB2BD824BF002736FC /* Task_Manager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Task_Manager.xcdatamodel; sourceTree = "<group>"; };
 		313B39C32BD85B74002736FC /* CoreDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataViewModel.swift; sourceTree = "<group>"; };
 		313B39C52BD86F6B002736FC /* AddTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskView.swift; sourceTree = "<group>"; };
+		31EFA1322BD8FBFD00CF124B /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
+		31EFA1342BD90BC600CF124B /* TaskDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailView.swift; sourceTree = "<group>"; };
+		31EFA1362BD91CDA00CF124B /* Task-Manager-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Task-Manager-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,13 +64,13 @@
 		313B39AE2BD824BE002736FC /* Task Manager */ = {
 			isa = PBXGroup;
 			children = (
+				31EFA1362BD91CDA00CF124B /* Task-Manager-Info.plist */,
 				313B39AF2BD824BE002736FC /* Task_ManagerApp.swift */,
-				313B39B12BD824BE002736FC /* ContentView.swift */,
-				313B39C52BD86F6B002736FC /* AddTaskView.swift */,
+				31EFA12F2BD8F59200CF124B /* View */,
 				313B39C22BD85B5F002736FC /* ViewModel */,
+				31EFA1302BD8F5AB00CF124B /* Model */,
+				31EFA1312BD8F5C100CF124B /* Service */,
 				313B39B32BD824BF002736FC /* Assets.xcassets */,
-				313B39B82BD824BF002736FC /* Persistence.swift */,
-				313B39BA2BD824BF002736FC /* Task_Manager.xcdatamodeld */,
 				313B39B52BD824BF002736FC /* Preview Content */,
 			);
 			path = "Task Manager";
@@ -85,6 +90,33 @@
 				313B39C32BD85B74002736FC /* CoreDataViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		31EFA12F2BD8F59200CF124B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				313B39B12BD824BE002736FC /* ContentView.swift */,
+				313B39C52BD86F6B002736FC /* AddTaskView.swift */,
+				31EFA1322BD8FBFD00CF124B /* TaskView.swift */,
+				31EFA1342BD90BC600CF124B /* TaskDetailView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		31EFA1302BD8F5AB00CF124B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				313B39BA2BD824BF002736FC /* Task_Manager.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		31EFA1312BD8F5C100CF124B /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				313B39B82BD824BF002736FC /* Persistence.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,7 +189,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31EFA1352BD90BC600CF124B /* TaskDetailView.swift in Sources */,
 				313B39C42BD85B74002736FC /* CoreDataViewModel.swift in Sources */,
+				31EFA1332BD8FBFD00CF124B /* TaskView.swift in Sources */,
 				313B39B92BD824BF002736FC /* Persistence.swift in Sources */,
 				313B39B22BD824BE002736FC /* ContentView.swift in Sources */,
 				313B39C62BD86F6B002736FC /* AddTaskView.swift in Sources */,
@@ -299,6 +333,7 @@
 				DEVELOPMENT_TEAM = H9TD9ZY99U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Task-Manager-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -329,6 +364,7 @@
 				DEVELOPMENT_TEAM = H9TD9ZY99U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Task-Manager-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

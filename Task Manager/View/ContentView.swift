@@ -14,30 +14,32 @@ struct ContentView: View {
     @State private var show = false
     @State private var inputTitle = ""
     @State private var inputDescription = ""
-    @State private var showAlert = false
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(viewModel.tasks, id: \.self) { task in
+            ScrollView(.vertical) {
+                ForEach(viewModel.tasks.indices, id: \.self) { taskIndex in
                     NavigationLink {
-                        Text("Task at \(task.title ?? "b")")
+                        TaskDetailView(task: viewModel.tasks[taskIndex], vm: viewModel)
                     } label: {
-                        Text(task.title ?? "b")
+                        TaskView(task: viewModel.tasks[taskIndex], index: taskIndex) {
+                            withAnimation(.snappy) {
+                                viewModel.deleteTask(task: viewModel.tasks[taskIndex])
+                            }
+                        }
                     }
+                    .padding(.vertical, 0)
                 }
-                .onDelete(perform: viewModel.deleteTask)
             }
-            
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
                 ToolbarItem {
                     Button(action: {
                         show = true
                     }, label: {
-                        Text("Add")
+                        Image(systemName: "plus.circle")
+                            .resizable()
+                            .frame(width: 34, height: 34)
+                            .foregroundStyle(.green)
                     })
                 }
             }
@@ -45,7 +47,7 @@ struct ContentView: View {
                 AddTaskView(show: $show, inputTitle: $inputTitle, inputDescription: $inputDescription) {
                     withAnimation {
                         if(inputTitle.isEmpty){
-                            showAlert = true
+                            print("Fill in title...")
                         } else{
                             viewModel.addTask(title: inputTitle, taskDescription: inputDescription, completed: false)
                         show.toggle()
@@ -56,8 +58,10 @@ struct ContentView: View {
                 .presentationDragIndicator(.visible)
             }
             
+            
             .navigationTitle("Task Manager")
         }
+        .preferredColorScheme(.dark)
     }
         
     }
