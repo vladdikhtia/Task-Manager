@@ -55,13 +55,8 @@ class CoreDataViewModel : ObservableObject {
         fetchTasks()
     }
     
-    func deleteTask(offsets: IndexSet) {
-//        offsets.map { tasks[$0] }.forEach(viewContext.delete)
-        guard let index = offsets.first else {
-            return
-        }
-        let taskEntity = tasks[index]
-        viewContext.delete(taskEntity)
+    func deleteTask(task: TaskEntity) {
+        viewContext.delete(task)
         save()
         fetchTasks()
     }
