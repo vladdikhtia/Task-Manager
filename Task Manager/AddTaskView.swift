@@ -41,6 +41,7 @@ struct AddTaskView: View {
             Button(
                 action: {
                     action()
+                    cleanInput()
                 }, label: {
                     Text("Create")
                         .padding()
@@ -53,6 +54,10 @@ struct AddTaskView: View {
                         .padding(.horizontal)
                 })
         }
+    }
+    func cleanInput() {
+        inputTitle = ""
+        inputDescription = ""
     }
 }
 
