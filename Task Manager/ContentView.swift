@@ -9,75 +9,59 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \TaskEntity.title, ascending: true)],
-        animation: .default)
-    private var tasks: FetchedResults<TaskEntity>
-
+    
+    @StateObject var viewModel = CoreDataViewModel()
+    @State private var show = false
+    @State private var inputTitle = ""
+    @State private var inputDescription = ""
+    @State private var showAlert = false
+    
     var body: some View {
         NavigationView {
             List {
-                ForEach(tasks) { task in
+                ForEach(viewModel.tasks, id: \.self) { task in
                     NavigationLink {
-                        Text("Task at \(task.title ?? "")")
+                        Text("Task at \(task.title ?? "b")")
                     } label: {
-                        Text(task.title ?? " ")
+                        Text(task.title ?? "b")
                     }
                 }
-                .onDelete(perform: deleteItems)
+                .onDelete(perform: viewModel.deleteTask)
             }
+            
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                 }
                 ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
+                    Button(action: {
+                        show = true
+                    }, label: {
+                        Text("Add")
+                    })
                 }
             }
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newTask = TaskEntity(context: viewContext)
-            newTask.title = "New Task"
+            .sheet(isPresented: $show){
+                AddTaskView(show: $show, inputTitle: $inputTitle, inputDescription: $inputDescription) {
+                    withAnimation {
+                        if(inputTitle.isEmpty){
+                            showAlert = true
+                        } else{
+                            viewModel.addTask(title: inputTitle, taskDescription: inputDescription, completed: false)
+                        show.toggle()
+                        }
+                    }
+                }
+                .presentationDetents([.fraction(0.45)])
+                .presentationDragIndicator(.visible)
+            }
             
-            save()
-            
+            .navigationTitle("Task Manager")
         }
     }
-
-    private func save() {
-        do {
-            try viewContext.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
+        
     }
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { tasks[$0] }.forEach(viewContext.delete)
-
-           save()
-        }
+    
+    #Preview {
+        ContentView(viewModel: CoreDataViewModel())
     }
-}
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
-
-#Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-}

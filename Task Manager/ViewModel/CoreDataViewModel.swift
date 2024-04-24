@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+
 class CoreDataViewModel : ObservableObject {
     private let viewContext = PersistenceController.shared.viewContext
     @Published var tasks: [TaskEntity] = []
