@@ -19,19 +19,21 @@ class CoreDataViewModel : ObservableObject {
     
     func fetchTasks() {
         let request = NSFetchRequest<TaskEntity>(entityName: "TaskEntity")
+        request.fetchLimit = 10
         
         do {
             tasks = try viewContext.fetch(request)
         } catch {
             print("DEBUG: Some error occured while fetching: \(error.localizedDescription)")
+            fatalError()
         }
     }
     
-    func addTask(title: String, taskDescription: String, completed: Bool = false) {
+    func addTask(title: String, taskDescription: String, completed: Bool) {
         let newTask = TaskEntity(context: viewContext)
-//        newTask.id = UUID()
         newTask.title = title
         newTask.taskDescription = taskDescription
+        newTask.completed = completed
         save()
         fetchTasks()
         print("Add")
@@ -42,6 +44,7 @@ class CoreDataViewModel : ObservableObject {
             try viewContext.save()
         } catch {
             print("Failed to save tasks: \(error.localizedDescription)")
+            fatalError()
         }
     }
     
