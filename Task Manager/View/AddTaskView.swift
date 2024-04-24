@@ -13,29 +13,32 @@ struct AddTaskView: View {
     @Binding var inputDescription: String
     var action : () -> Void
     
+    
     var body: some View {
         VStack(spacing: 30) {
             Text("Create new task")
                 .font(.largeTitle)
                 .fontWeight(.semibold)
             
-            VStack(spacing: 16) {
+            VStack(spacing: 20) {
                 TextField("Task title", text: $inputTitle)
                     .padding()
-                    .background(.white)
+                    .background(.black)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                     .padding(.horizontal)
-                    .shadow(radius: 10)
+                    .shadow(color: .white, radius: 8)
                     .font(.subheadline)
+                    .fontWeight(.semibold)
                 
                 
                 TextField("Task description", text: $inputDescription)
                     .padding()
-                    .background(.white)
+                    .background(.black)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                     .padding(.horizontal)
-                    .shadow(radius: 10)
+                    .shadow(color: .white, radius: 8)
                     .font(.subheadline)
+                    .fontWeight(.semibold)
             }
             
             Button(
@@ -45,17 +48,18 @@ struct AddTaskView: View {
                 }, label: {
                     Text("Create")
                         .padding()
-                        .foregroundStyle(.white)
-                        .font(.headline)
+                        .foregroundStyle(.green)
+                        .font(.title2)
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity)
-                        .background(.green)
+                        .background(.black)
                         .clipShape(.rect(cornerRadius: 10))
+                        .shadow(color: .white, radius: 10)
                         .padding(.horizontal)
                 })
         }
     }
-    func cleanInput() {
+    private func cleanInput() {
         inputTitle = ""
         inputDescription = ""
     }

@@ -29,17 +29,11 @@ struct TaskView: View {
                 .frame(maxWidth: .infinity, maxHeight: 250)
             
             VStack(alignment: .leading, spacing: 20) {
-                HStack{
-                    Text("\(task.title ?? "")")
+                Text("\(task.title ?? "")")
                         .font(.title)
                         .fontWeight(.bold)
                         .fontDesign(.rounded)
                         .foregroundStyle(.background)
-                    
-                     Spacer()
-                    
-                    ShareLink("", item: "\(task.title ?? "") \n\(task.taskDescription ?? "")")
-                }
                 
                 Text("\(task.taskDescription ?? "")")
                     .font(.headline)
